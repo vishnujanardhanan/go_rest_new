@@ -29,7 +29,7 @@ func main() {
 	fmt.Print("here-----")
 	///we create a new router to expose our api
 	//to our users
-	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/api/httpmain", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("here too----")
 		//notice how this function takes two parameters
 		//the first parameter is a ResponseWriter writer and
