@@ -6,23 +6,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strings"
-
-	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 )
 
 func main() {
 
-	router := mux.NewRouter()
-	c := cors.AllowAll()
-	handler := c.Handler(router)
-	port, ok := os.LookupEnv("PORT")
-
-	if !ok {
-		port = "8080"
-	}
+	listenAddr := ":8080"
 
 	//	handler := http.NewServeMux()
 
@@ -44,13 +33,15 @@ func main() {
 		w.Header().Set("Content_Type", "application/json")
 		w.Write(resByte)
 	})
+
+	log.Fatal(http.ListenAndServe(listenAddr, nil))
 	//Every time a  request is sent to the endpoint ("/api/hello")
 	//the function SayHello will be invoked
 	//	http.ListenAndServe("0.0.0.0", handler)
 	//we tell our api to listen to all request to port 8080.
-	if err := http.ListenAndServe(":"+port, trailingSlashHandler(handler)); err != nil {
-		log.Fatalf("unable to start http server, %s", err)
-	}
+	// if err := http.ListenAndServe(":"+port, trailingSlashHandler(handler)); err != nil {
+	// 	log.Fatalf("unable to start http server, %s", err)
+	// }
 }
 
 func trailingSlashHandler(next http.Handler) http.Handler {
